@@ -27,36 +27,21 @@
 
 **Using Docker Compose:**
 
-```yaml
-services:
-  youtube-downloader:
-    image: ghcr.io/initred/youtube-downloader:latest
-    ports:
-      - "3000:3000"
-    restart: unless-stopped
-```
-
 ```bash
 docker compose up -d
-```
-
-**Or using Docker directly:**
-
-```bash
-docker run -p 3000:3000 ghcr.io/initred/youtube-downloader:latest
 ```
 
 Then open http://localhost:3000
 
 ## Tech Stack
 
-| Category | Technology |
-|----------|------------|
-| Runtime | [Bun](https://bun.sh/) |
-| Framework | [Next.js 16](https://nextjs.org/) (App Router) |
-| UI | [shadcn/ui](https://ui.shadcn.com/) + [Tailwind CSS](https://tailwindcss.com/) |
-| YouTube Extraction | [yt-dlp](https://github.com/yt-dlp/yt-dlp) |
-| Audio Conversion | [FFmpeg.wasm](https://ffmpegwasm.netlify.app/) |
+| Category           | Technology                                                                     |
+| ------------------ | ------------------------------------------------------------------------------ |
+| Runtime            | [Bun](https://bun.sh/)                                                         |
+| Framework          | [Next.js 16](https://nextjs.org/) (App Router)                                 |
+| UI                 | [shadcn/ui](https://ui.shadcn.com/) + [Tailwind CSS](https://tailwindcss.com/) |
+| YouTube Extraction | [yt-dlp](https://github.com/yt-dlp/yt-dlp)                                     |
+| Audio Conversion   | [FFmpeg.wasm](https://ffmpegwasm.netlify.app/)                                 |
 
 ## Running with Docker
 
@@ -100,12 +85,14 @@ docker compose down
 ## System Requirements
 
 ### For Docker (Recommended)
+
 - Docker 20.10+
 - Docker Compose v2+
 - 512MB RAM minimum
 - 1GB disk space
 
 ### For Local Development
+
 - [Bun](https://bun.sh/) 1.0+
 - [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 - [FFmpeg](https://ffmpeg.org/)
@@ -138,11 +125,13 @@ bun run start
 ## API Reference
 
 ### Get Video Info
+
 ```
 GET /api/info?url=<YouTube URL>
 ```
 
 **Response:**
+
 ```json
 {
   "id": "dQw4w9WgXcQ",
@@ -158,6 +147,7 @@ GET /api/info?url=<YouTube URL>
 ```
 
 ### Download Video
+
 ```
 GET /api/download?url=<YouTube URL>&formatId=<Format ID>&type=video|audio
 ```
@@ -167,6 +157,7 @@ Returns the video/audio file as a binary stream.
 ## Troubleshooting
 
 ### "yt-dlp is not installed"
+
 ```bash
 # macOS
 brew install yt-dlp
@@ -179,6 +170,7 @@ winget install yt-dlp
 ```
 
 ### "FFmpeg error" or audio conversion fails
+
 ```bash
 # macOS
 brew install ffmpeg
@@ -190,17 +182,13 @@ sudo apt-get install ffmpeg
 winget install ffmpeg
 ```
 
-### "Port 3000 already in use"
-```bash
-# Use a different port
-docker run -p 3001:3000 ghcr.io/initred/youtube-downloader:latest
-```
-
 ### "Video unavailable" or "Private video"
+
 - The video may be private, deleted, or region-restricted
 - Try a different video URL
 
 ### Download times out
+
 - Large videos (>1 hour) may take longer to process
 - The default timeout is 5 minutes
 
