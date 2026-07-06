@@ -1,6 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getVideoInfo } from "@/lib/ytdlp";
 
+function isYouTubeUrl(url: string): boolean {
+  try {
+    const parsed = new URL(/^https?:\/\//i.test(url) ? url : `https://${url}`);
+    const hostname = parsed.hostname
+      .toLowerCase()
+      .replace(/^(www|m|music|gaming)\./, "");
+    return hostname === "youtube.com" || hostname === "youtu.be";
+  } catch {
+    return false;
+  }
+}
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const url = searchParams.get("url");
@@ -13,9 +25,7 @@ export async function GET(request: NextRequest) {
   }
 
   // Validate YouTube URL
-  const youtubeRegex =
-    /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)/;
-  if (!youtubeRegex.test(url)) {
+  if (!isYouTubeUrl(url)) {
     return NextResponse.json(
       { error: "Invalid YouTube URL" },
       { status: 400 }
